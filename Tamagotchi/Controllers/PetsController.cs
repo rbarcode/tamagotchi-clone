@@ -30,14 +30,15 @@ namespace Tamagotchi.Controllers
     public ActionResult PassTime()
     {
       List<Pet> currentPets = Pet.GetAll();
-      foreach(Pet individual in currentPets)
+      foreach (Pet individual in currentPets)
       {
         individual.TimePassDecrementFields();
       }
+      // return View creates a new url at pets/passtime?
       // return View("Index", currentPets);
       return RedirectToAction("Index");
     }
-    
+
     [HttpGet("/pets/{id}")] // dynamic routing 
     public ActionResult Show(int id)
     {
