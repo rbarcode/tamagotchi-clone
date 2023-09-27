@@ -26,7 +26,18 @@ namespace Tamagotchi.Controllers
       return RedirectToAction("Index");
     }
 
-    // localhost:5001/pets/1
+    [HttpPost("/pets/passtime")]
+    public ActionResult PassTime()
+    {
+      List<Pet> currentPets = Pet.GetAll();
+      foreach(Pet individual in currentPets)
+      {
+        individual.TimePassDecrementFields();
+      }
+      // return View("Index", currentPets);
+      return RedirectToAction("Index");
+    }
+    
     [HttpGet("/pets/{id}")] // dynamic routing 
     public ActionResult Show(int id)
     {
@@ -34,9 +45,6 @@ namespace Tamagotchi.Controllers
       return View(specifiedPet);
     }
 
-    //[HttpPost("/pets/{id}/feed")]
-    //[HttpPost("/pets/{id}/attention")]
-    //[HttpPost("/pets/{id}/rest")]        
     [HttpPost("/pets/{id}")]
     public ActionResult Update(int id, string button)
     {
@@ -53,8 +61,9 @@ namespace Tamagotchi.Controllers
       {
         foundPet.GiveAttention();
       }
-      return RedirectToAction("Show", new { id });
-      // ALTERNATIVE APPROACH: return View(foundPet);
+      // return RedirectToAction("Show", new { id });
+      // ALTERNATIVE APPROACH: 
+      return View("Show", foundPet);
     }
   }
 }
